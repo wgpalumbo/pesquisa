@@ -245,6 +245,16 @@ public class Consolidar {
                 }
 
             }
+            //Ajuste ZONACASA nas Viagem
+            try {
+
+                String sqlServer = "update viagem74 set zonacasa = domicilio.zona from domicilio where domicilio.key = viagem74.key;";
+                stm2.execute(sqlServer);
+
+                //----------------                           
+            } catch (Exception e) {
+                msgErros.append(e.getMessage() + "ERRO AJUSTE ZONACASA !");
+            }
 
             TbRs1.close();
             stm1.close();

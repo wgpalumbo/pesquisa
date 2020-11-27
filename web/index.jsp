@@ -156,6 +156,9 @@
                 if (x === 41) {
                     $('#meio').attr("src", "faixahorariamodopr.jsp");
                 }
+                if (x === 42) {
+                    $('#meio').attr("src", "rendaindividualmodopr.jsp");
+                }
                return;
             }
         //----------
@@ -311,6 +314,7 @@
                     <li><a href="javascript:;" onclick="menuM(15);" target="meio">Idade x Modos-PR</a></li>
                     <li><a href="javascript:;" onclick="menuM(16);" target="meio">Escolaridade-Modos-PR</a></li>
                     <li><a href="javascript:;" onclick="menuM(18);" target="meio">Renda x Modos-PR</a></li>
+                    <li><a href="javascript:;" onclick="menuM(42);" target="meio">Renda Indiv. x Modos-PR</a></li>
                     <li><a href="javascript:;" onclick="menuM(40);" target="meio">Sexo x Modos-PR</a></li>
                    <li><font class="submenu"> MOBILIDADE </font></li>
                     <li><a href="javascript:;" onclick="menuM(36);" target="meio">Mobilidade-Simples</a></li>

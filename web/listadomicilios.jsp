@@ -81,7 +81,20 @@ function EnviaExibir(){
 </TABLE>
 </body>
 </HTML>
-<%@ page contentType="text/html; charset=UTF-8" import="Jau.Sistema.Relatorios,Jau.Util.GravarLog,java.util.*" %>
+<% 
+	String nomeArquivo="ListagemDomicilioxCentroidesxDist.Matriz";
+	if(zona.length()>0){
+		nomeArquivo+="_zona_"+zona;
+		GerarExcel gerarExcel = new GerarExcel(nomeArquivo);
+		List<String> colunas = Arrays.asList( new String[]{"ID_CASA","X-UTM","Y-UTM","Centroide","Dist.Matriz"} );
+		gerarExcel.GerarColunas(colunas);
+		gerarExcel.GerarPlanilha(mapMotModo);
+		gerarExcel.Close();
+		gerarExcel=null;
+	}
+	//------------------
+%>
+<%@ page contentType="text/html; charset=UTF-8" import="Jau.Sistema.Relatorios,Jau.Util.GravarLog,java.util.*,Jau.Util.GerarExcel" %>
 <%
 //******Coletor de Lixo
 //chamndo o coletor

@@ -256,6 +256,23 @@ public class Relatorios {
 
     }
 
+    public ArrayList RendaIndividual() throws Exception {
+        ArrayList<String> lstMotivos = new ArrayList<>();
+        lstMotivos.add("0 - 1/2");
+        lstMotivos.add("1/2 - 1");
+        lstMotivos.add("1 - 2");
+        lstMotivos.add("2 - 3");
+        lstMotivos.add("3 - 5");
+        lstMotivos.add("5 - 10");
+        lstMotivos.add("10 - 15");
+        lstMotivos.add("15 - 20");
+        lstMotivos.add("20 - 99");
+        lstMotivos.add("Sem Rend.");
+        lstMotivos.add("< 10 anos");
+        return lstMotivos;
+
+    }
+
     public HashMap MontaMotivosModos(String ismaior65) throws Exception {
 
         HashMap<String, Integer> mapMotModo = new HashMap<>();
@@ -1959,6 +1976,118 @@ public class Relatorios {
 
     }
 
+    private String ObterChaveRendaIndividual(double valor, int idade) {
+
+        double salariominimo = 1045.00;
+        String retorno = "";
+
+        if (valor > 0 && valor <= 0.5 * salariominimo) {
+            retorno = "0 - 1/2";
+        }
+        if (valor > 0.5 * salariominimo && valor <= salariominimo) {
+            retorno = "1/2 - 1";
+        }
+        if (valor > salariominimo && valor <= 2 * salariominimo) {
+            retorno = "1 - 2";
+        }
+        if (valor > 2 * salariominimo && valor <= 3 * salariominimo) {
+            retorno = "2 - 3";
+        }
+        if (valor > 3 * salariominimo && valor <= 5 * salariominimo) {
+            retorno = "3 - 5";
+        }
+        if (valor > 5 * salariominimo && valor <= 10 * salariominimo) {
+            retorno = "5 - 10";
+        }
+        if (valor > 10 * salariominimo && valor <= 15 * salariominimo) {
+            retorno = "10 - 15";
+        }
+        if (valor > 20 * salariominimo && valor <= 99 * salariominimo) {
+            retorno = "20 - 99";
+        }
+        if (valor > 20 * salariominimo && valor <= 99 * salariominimo) {
+            retorno = "20 - 99";
+        }
+        if (valor == 0) {
+            retorno = "Sem Rend.";
+        }
+        if (idade < 10) {
+            retorno = "< 10 anos";
+        }
+        return retorno;
+
+    }
+
+    public HashMap MontaRendaIndividualModosPRPorZonas(String zona, String ano, String tirarfator, String motivo1) throws Exception {
+
+        String campo = "fator" + ano;
+        if (ano.length() == 0) {
+            campo = "fator2019";
+        }
+
+        HashMap<String, Integer> mapMotModo = new HashMap<>();
+        try {
+            Connection cnn2 = Conecta.getConexao(2);
+            Statement stm = cnn2.createStatement();
+            String sqlquery = "SELECT v.motivo,v.modopr,p.rendamensal,p.idade," + campo + " as fator FROM viagem74 v,pessoas p WHERE v.key = p.key and v.codigo = p.numerodapessoa and v.motivo=" + motivo1 + " ";
+
+            if (zona.length() > 0) {
+                sqlquery += " AND p.zonacasa = " + zona;
+            }
+
+            System.out.println(sqlquery);
+            ResultSet TbRs1 = stm.executeQuery(sqlquery);
+            while (TbRs1.next()) {
+                String motivo = TbRs1.getString("motivo");
+                if (motivo == null) {
+                    motivo = "";
+                } else {
+                    motivo = motivo.trim();
+                    if (motivo.length() < 2) {
+                        motivo = "0" + motivo;
+                    }
+                }
+                String modo1 = TbRs1.getString("modopr");
+                if (modo1 == null) {
+                    modo1 = "";
+                }
+                double rendamensal = TbRs1.getDouble("rendamensal");
+                int idade = TbRs1.getInt("idade");
+
+                int fator = TbRs1.getInt("fator");
+                if (tirarfator.equalsIgnoreCase("s")) {
+                    fator = 1;
+                }
+                //----------
+                if (motivo.trim().length() > 0) {
+                    int conta = 0;
+                    if (modo1.trim().length() > 0) {
+                        conta = 0;
+                        String ch1 = ObterChaveRendaIndividual(rendamensal, idade) + "-" + modo1.trim();
+                        if (mapMotModo.containsKey(ch1)) {
+                            conta = mapMotModo.get(ch1);
+                        }
+                        conta += fator;
+                        mapMotModo.put(ch1, conta);
+                        System.out.println(ch1 + " -> " + String.valueOf(conta));
+                    }
+                    //----------                    
+                }
+                //----------
+
+            }
+            TbRs1.close();
+            stm.close();
+            cnn2.close();
+
+        } catch (Exception e) {
+            GravarLog.gravarLog(this.getClass().getSimpleName() + "-MontaRendaIndividualModosPRPorZonas-" + e.getMessage());
+        }
+
+        return mapMotModo;
+
+    }
+
     public HashMap MontaFxHorariaModosPRPorZonas(String zona, String ano, String tirarfator) throws Exception {
 
         String campo = "fator" + ano;
@@ -1971,11 +2100,11 @@ public class Relatorios {
             Connection cnn2 = Conecta.getConexao(2);
             Statement stm = cnn2.createStatement();
 
-            String sqlquery = "select horanum,count(horanum) as conta,sum(fat2019) as fator2019,sum(fat2036) as fator2036,modopr from viagem74 group by horanum,modopr order by horanum,modopr";
+            String sqlquery = "select horanum,count(horanum) as conta,sum(fat2019) as fator2019,sum(fat2036) as fator2036,modopr from viagem74 ";
             if (zona.length() > 0) {
-                sqlquery += " AND zonacasa = " + zona;
+                sqlquery += " WHERE zonacasa = " + zona;
             }
-
+            sqlquery += " group by horanum,modopr order by horanum,modopr";
             System.out.println(sqlquery);
             ResultSet TbRs1 = stm.executeQuery(sqlquery);
             while (TbRs1.next()) {
@@ -1986,10 +2115,6 @@ public class Relatorios {
                 String modo1 = TbRs1.getString("modopr");
                 if (modo1 == null) {
                     modo1 = "";
-                }
-                String idade = TbRs1.getString("idade");
-                if (idade == null) {
-                    idade = "0";
                 }
                 if (ano.equals("2019")) {
                     conta = fator2019;
@@ -2010,6 +2135,7 @@ public class Relatorios {
                     }
                     conta += soma;
                     mapMotModo.put(ch1, conta);
+                    //System.out.println(ch1+" -> "+String.valueOf(conta));
                 }
 
                 //----------
