@@ -1,0 +1,187 @@
+
+  
+body, form{
+	font-family:"Myriad Pro"; 
+	/*background: url('img/denim.png');*/
+    padding:5px;
+    font-size:11px;
+}
+
+legend{
+	width: 150px;
+	background:#D7D7D7;
+	font-family:"Myriad Pro";
+	padding: 2px;
+    font-size:13px;
+}
+
+.upper{text-transform:uppercase}
+
+input[type=text]:focus { border-color:#333; }
+
+.button {
+	display: block;
+	width: 105px;
+	height: 14px;
+	font-size:11px;
+	background: #D7D7D7;
+	padding: 5px;
+	text-align: center;
+	text-decoration : none;
+	border-radius: 2px;
+	color: black;
+	border-style: solid;
+	border-width : 1px 1px 1px 1px;
+	text-decoration : none;
+	border-color : #000000
+     
+}
+
+.button1 {
+	display: block;
+	width: 170px;
+	height: 13px;
+	background: #FFCA00;
+	padding: 5px;
+	text-align: center;
+	text-decoration : none;
+	border-radius: 2px;
+	color: black;
+	border-style: solid;
+	border-width : 1px 1px 1px 1px;
+	text-decoration : none;
+	border-color : #000000
+     
+}
+
+.button2 {
+	display: block;
+	width: 80px;
+	height: 13px;
+	background: #FFCA00;
+	padding: 5px;
+	text-align: center;
+	text-decoration : none;
+	border-radius: 2px;
+	color: black;
+	border-style: solid;
+	border-width : 1px 1px 1px 1px;
+	text-decoration : none;
+	border-color : #000000
+     
+}
+
+.pagina{
+    width:auto;
+    height:auto;    
+}
+  
+.linha{
+    width:auto;
+    padding:5px;
+    height:auto;
+    display:table;     
+}
+
+.textoarea{
+	/*style="resize: none;font-family: Tahoma; font-size: 18 pt"*/
+	resize:none; 
+    width:auto;
+    padding:2px;
+    height:auto;
+	font-family: Verdana, arial, helvetica, sans-serif;
+    font-size:12px;
+}
+
+table  {
+	background: #FFF;
+	text-align:left;
+	border-spacing: 1px;
+	border-left:1px solid #567;
+	border-right:1px solid #000;
+	border-top:1px solid #669;
+	border-bottom:1px solid #669;
+	padding: 2px;
+	border-radius: 5px;
+	font-family: Verdana, arial, helvetica, sans-serif;
+	font-size:14px;
+}
+table a, table, tbody, tfoot, tr, th, td {
+	font-family: Verdana, arial, helvetica, sans-serif;
+}
+table caption {
+	border-top:1px solid #ddf;
+	border-left:1px solid #ddf;
+	border-right:1px solid #669;
+	border-bottom:1px solid #669;
+	text-align: left;
+	padding: 3px;
+	color:  #cff;
+	background: #5060A9;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 16px;
+	font-weight:bold;
+	border-radius: 5px;
+	
+}
+td, th {
+	border-top:1px solid #ddf;
+	border-left:1px solid #ddf;
+	border-right:2px solid #669;
+	border-bottom:2px solid #669;
+}
+tr.odd {
+	color: inherit;
+	background: #88e;
+}
+
+.loader{
+	font-family:"Myriad Pro";
+	background:#0f1e31;
+	font-size:24px;
+	color:  #FC3;
+	position: absolute;
+	top: 51px;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 8px solid #444;
+	left: 42px;
+	border: 12px double orange;
+	padding: 20px;
+}
+
+.datafixa{
+	/*style="resize: none;font-family: Tahoma; font-size: 18 pt"*/
+	/*width: 70px;*/
+	background:#D7D7D7;
+	font-family:"Myriad Pro";
+	padding: 2px;
+}
+
+.msg{
+	font-family:"Myriad Pro";
+	background:#CCC;
+	font-size:20px;
+	color:  #00F;
+	padding: 2px;
+}
+
+.msg2{
+	font-family:"Myriad Pro";
+	background:#FFFFCC;
+	font-size:15px;
+	color:  #00F;
+	padding: 2px;
+}
+
+
+.lista{
+	/*style="resize: none;font-family: Tahoma; font-size: 18 pt"*/
+	resize:none; 
+    width:240px;
+    padding:5px;
+	font-family: Verdana, arial, helvetica, sans-serif;
+    font-size:12px; 
+}
+
+
