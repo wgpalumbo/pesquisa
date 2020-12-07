@@ -65,8 +65,8 @@
 <table border="1" cellspacing="0" cellpadding="4" align="center" bordercolor="#000000" width="80%">
   <tr bgcolor="#6CCECE">
     <td align="center" noWrap bgcolor="#BBE3FF" rowspan="2"><font face="verdana" size="1" color="Black">Zona</font></td>
-    <td colspan="5" align="center" noWrap bgcolor="#6CCECE"><font face="verdana" size="1" color="Black">PICO  2019</font></td>
-    <td colspan="43" align="center" noWrap bgcolor="#6CCECE"><font face="verdana" size="1" color="Black">Sal.Min.R$:&nbsp;<%= nrodecimal2.format(salariominimo) %></font></td>
+    <td colspan="5" align="center" noWrap bgcolor="#6CCECE"><font face="verdana" size="2" color="Black"> 2019</font></td>
+    <td colspan="43" align="center" noWrap bgcolor="#6CCECE"><font face="verdana" size="2" color="Black">Sal.Min.R$:&nbsp;<%= nrodecimal2.format(salariominimo) %></font></td>
     <td align="center" noWrap bgcolor="#6CCECE">&nbsp;</td>
   </tr>
   <tr>
@@ -322,6 +322,7 @@ Domicilio</font></td>
   	consolida.GravarFatoresExpansao(ano,mapFatoresAchados,salariominimo);
    %>
 </table>
+<p align="center"><a href="javascript:self.print();"><img border="0" src="images/printer.bmp" align="center"></a></p>
 </body>
 </HTML>
 <%@ page contentType="text/html; charset=UTF-8" import="Jau.Sistema.Relatorios,Jau.Sistema.Consolidar,Jau.Util.GravarLog,java.util.*,java.text.NumberFormat" %>

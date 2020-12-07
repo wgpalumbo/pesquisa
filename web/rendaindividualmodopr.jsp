@@ -19,14 +19,11 @@ function EnviaExibir(){
 	String zona=request.getParameter("zona");if(zona==null)zona=""; 
 	String ano=request.getParameter("ano");if(ano==null)ano="2019"; 
 	String semfator=request.getParameter("semfator");if(semfator==null)semfator="N"; 
-	String motivo=request.getParameter("motivo");if(motivo==null)motivo=""; 
-	Relatorios relato = new Relatorios(pageContext); 
-	ArrayList<String> lstMotivos2 = relato.Motivos();
 %>
 <form name="frmcad" id="frmcad" METHOD="post"><input name="fazeroq" id="fazeroq" type="hidden"  value READONLY>
 <table border="1" align="center" cellpadding="3" cellspacing="0">
   <tr align="center" bgcolor="#819FC9">
-    <td colspan="9" nowrap><span class="style5"><font size="1" face="Verdana">Filtro</font></span></td>
+    <td colspan="7" nowrap><span class="style5"><font size="1" face="Verdana">Filtro</font></span></td>
   </tr>
   <tr bgcolor="#FFFFFF">
     <td align="right" nowrap bgcolor="#CCCCCC"><font color="#000000" size="1" face="Verdana">ZONA:</font></td>
@@ -43,10 +40,8 @@ function EnviaExibir(){
       <select name="ano" id="ano" >
         <option value = "2019" <% if(ano.equals("2019"))out.println("selected"); %>>2019</option>
         <option value = "2036" <% if(ano.equals("2036"))out.println("selected"); %>>2036</option>
-      </select>
+        </select>
     </font></td>
-    <td align="left" nowrap bgcolor="#CCCCCC"><font color="#000000" size="1" face="Verdana">MOTIVO:</font></td>
-    <td align="left" nowrap bgcolor="#FFFFFF"><font color="#000000" size="2" face="Tahoma"><%= Relatorios.montaMotivos(lstMotivos2,motivo) %></font></td>
     <td align="left" nowrap bgcolor="#CCCCCC"><font color="#000000" size="1" face="Verdana">TIRAR FATOR:</font></td>
     <td align="left" nowrap bgcolor="#FFFFFF"><font size=-1>
       <select name="semfator" id="semfator" >
@@ -66,9 +61,10 @@ function EnviaExibir(){
 	String planilhaExcel = "";
 	ArrayList<String> planilhaXLS =  new ArrayList<>();
 	//-----
+	Relatorios relato = new Relatorios(pageContext); 
 	ArrayList<String> lstMotivos = relato.RendaIndividual();
 	ArrayList<String> lstModos = relato.ModosPR();
-	HashMap<String, Integer> mapMotModo = relato.MontaRendaIndividualModosPRPorZonas(zona, ano, semfator, motivo);	
+	HashMap<String, Integer> mapMotModo = relato.MontaRendaIndividualModosPRPorZonas(zona, ano, semfator);	
 	relato=null;
 	int totalzaolinha=0;
 	int[] totalcoluna = new int[lstModos.size()];
@@ -145,9 +141,6 @@ function EnviaExibir(){
 	String nomeArquivo="ModoPrincipalxRendaIndividual"+ano;
 	if(zona.length()>0){
 		nomeArquivo+="_Zona_"+zona;
-	}
-	if(motivo.length()>0){
-		nomeArquivo+="_Motivo_"+motivo;
 	}
 	GerarExcel gerarExcel = new GerarExcel(nomeArquivo);
 	//List<String> colunas = Arrays.asList( new String[]{"Zona","ID","Endereco","X-UTM","Y-UTM"} );

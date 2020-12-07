@@ -7,6 +7,7 @@
 <style type="text/css">
 .style3 {color: #FFFFFF; font-weight: bold; }
 .style5 {color: #000000; font-weight: bold; }
+@media print { DIV.PAGEBREAK {page-break-before: always}} 
 </style>
 <script>
 function EnviaExibir(){
@@ -53,6 +54,7 @@ function EnviaExibir(){
 	HashMap<String, String[]> mapDomici  = new HashMap<>();
 	HashMap<String, String[]> mapCentro  = new HashMap<>();
 	Relatorios relato = new Relatorios(pageContext); 
+	int conta=0;
 	if(zona.length()>0){
 		mapDomici = relato.ObterDomiciliosCentroides(zona);
 		mapCentro =  relato.ObterCentroides(zona);
@@ -60,16 +62,15 @@ function EnviaExibir(){
 	}
 %>
 
-<table border="1" align="center" cellpadding="3" cellspacing="0">
+<table border="1" align="center" cellpadding="3" cellspacing="0" width="95%">
   <tr>
-    <Th colspan="20" bgcolor="#002C73"><font size="2" face="Tahoma" color="#FFFFFF">(Pesquisa JAU)</font></Th>
-  
+    <Th colspan="20" bgcolor="#002C73"><font size="2" face="Tahoma" color="#FFFFFF">(Pesquisa JAU)</font></Th>  
   <TR>
     <TD align=center nowrap="nowrap" ><font face="Tahoma" size="2" color="#000080">ID Domiclio</font></TD>
     <TD align=center nowrap="nowrap" ><font face="Tahoma" size="2" color="#000080">UTM Domicilio</font></TD>
     <%
 			if(!mapCentro.isEmpty()){
-				for (Map.Entry<String, String[]> set : mapCentro.entrySet()) {
+				for (Map.Entry<String, String[]> set : mapCentro.entrySet()) { 
 					String[] utm = set.getValue();
 					out.println("<TD align=left nowrap='nowrap'><font face='Tahoma' size='2' color='#000080'>Centroide: "+set.getKey()+"<br>x:"+utm[0]+"<br>y:"+utm[1]+"<font></TD>");
 				}
@@ -84,6 +85,7 @@ function EnviaExibir(){
 			if(!mapDomici.isEmpty()&&!mapCentro.isEmpty()){
 				
 				for (Map.Entry<String, String[]> set1 : mapDomici.entrySet()) {
+					conta++;
 					String[] utm1 = set1.getValue();
             
 	%>
@@ -102,11 +104,34 @@ function EnviaExibir(){
 		double result2=-1;
 		if(escolhido.length()>0){  result2 = relato.AcharDistanciaMatriz(escolhido); }
 	%>
-
     <TD align=center bgcolor="#E1E1E1" ><font face="Tahoma" size="2" color="black"><%= (result2==-1?result2:nrodecimal2.format(result2)) %></font></TD>
   </TR>
+
+<% if(conta>=22){  conta=1; %>
+        </table><DIV CLASS='PAGEBREAK'></DIV>
+        <table border="1" align="center" cellpadding="3" cellspacing="0" width="95%">
+          <tr>
+            <Th colspan="20" bgcolor="#002C73"><font size="2" face="Tahoma" color="#FFFFFF">(Pesquisa JAU)</font></Th>  
+          <TR>
+            <TD align=center nowrap="nowrap" ><font face="Tahoma" size="2" color="#000080">ID Domiclio</font></TD>
+            <TD align=center nowrap="nowrap" ><font face="Tahoma" size="2" color="#000080">UTM Domicilio</font></TD>
+            <%
+                    if(!mapCentro.isEmpty()){
+                        for (Map.Entry<String, String[]> set : mapCentro.entrySet()) { 
+                            String[] utm = set.getValue();
+                            out.println("<TD align=left nowrap='nowrap'><font face='Tahoma' size='2' color='#000080'>Centroide: "+set.getKey()+"<br>x:"+utm[0]+"<br>y:"+utm[1]+"<font></TD>");
+                        }
+                    }
+            %>
+            <TD align=center nowrap="nowrap" ><font face="Tahoma" size="2" color="#000080">Escolhido</font></TD>
+            <TD align=center nowrap="nowrap" ><font face="Tahoma" size="2" color="#000080">Distancia<br>Matriz</font></TD>
+          </TR>			
+<% } %>
+
+
   <% } } } catch (Exception e) {  out.println(e.getMessage()); }  %>
 </TABLE>
+<p align="center"><a href="javascript:self.print();"><img border="0" src="images/printer.bmp" align="center"></a></p>
 </body>
 </HTML>
 <%@ page contentType="text/html; charset=UTF-8" import="Jau.Sistema.Relatorios,Jau.Util.GravarLog,java.util.*,java.text.NumberFormat" %>

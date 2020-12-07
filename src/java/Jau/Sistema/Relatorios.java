@@ -2018,7 +2018,7 @@ public class Relatorios {
 
     }
 
-    public HashMap MontaRendaIndividualModosPRPorZonas(String zona, String ano, String tirarfator, String motivo1) throws Exception {
+    public HashMap MontaRendaIndividualModosPRPorZonas(String zona, String ano, String tirarfator) throws Exception {
 
         String campo = "fator" + ano;
         if (ano.length() == 0) {
@@ -2029,7 +2029,7 @@ public class Relatorios {
         try {
             Connection cnn2 = Conecta.getConexao(2);
             Statement stm = cnn2.createStatement();
-            String sqlquery = "SELECT v.motivo,v.modopr,p.rendamensal,p.idade," + campo + " as fator FROM viagem74 v,pessoas p WHERE v.key = p.key and v.codigo = p.numerodapessoa and v.motivo=" + motivo1 + " ";
+            String sqlquery = "SELECT v.motivo,v.modopr,p.rendamensal,p.idade," + campo + " as fator FROM viagem74 v,pessoas p WHERE v.key = p.key and v.codigo = p.numerodapessoa ";
 
             if (zona.length() > 0) {
                 sqlquery += " AND p.zonacasa = " + zona;
